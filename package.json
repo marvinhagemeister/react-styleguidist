@@ -68,7 +68,6 @@
     "webpack": "1 || ^2.1.0-beta"
   },
   "devDependencies": {
-    "ava": "~0.16.0",
     "babel-eslint": "~7.0.0",
     "babel-register": "~6.16.3",
     "chai": "^3.5.0",
@@ -93,10 +92,9 @@
     "webpack": "1.13.2 || ^2.1.0-beta"
   },
   "scripts": {
-    "test2": "mocha --compilers js:babel-register 'src/**/*.spec.js' 'test/**/*.spec.js'",
-    "test": "npm run lint && npm run test:ava",
-    "test:ava": "cross-env NODE_ENV=test ava",
-    "test:watch": "cross-env NODE_ENV=test ava --watch",
+    "test": "npm run lint && npm run test:mocha",
+    "test:mocha": "cross-env NODE_ENV=test mocha --compilers js:babel-register 'src/**/*.spec.js' 'test/**/*.spec.js'",
+    "test:watch": "npm run test:mocha -- --watch",
     "start": "bin/styleguidist.js server --config examples/basic/styleguide.config.js",
     "start:customised": "bin/styleguidist.js server --config examples/customised/styleguide.config.js",
     "start:sections": "bin/styleguidist.js server --config examples/sections/styleguide.config.js",
@@ -108,22 +106,6 @@
     "phantomjs": "phantomjs test/phantom.js examples/basic/styleguide/index.html",
     "phantomjs:customised": "phantomjs test/phantom.js examples/customised/styleguide/index.html",
     "phantomjs:sections": "phantomjs test/phantom.js examples/sections/styleguide/index.html"
-  },
-  "ava": {
-    "files": [
-      "src/**/*.spec.js",
-      "test/*.spec.js"
-    ],
-    "source": [
-      "src/**/*.js",
-      "loaders/**/*.js",
-      "scripts/**/*.js"
-    ],
-    "require": [
-      "babel-register",
-      "./test/avasetup"
-    ],
-    "babel": "inherit"
   },
   "keywords": [
     "react",
