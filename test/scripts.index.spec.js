@@ -1,26 +1,28 @@
-import test from 'ava';
+import { assert as t } from 'chai';
 import styleguidist from '../scripts';
 
-test('should return API methods', t => {
-	const api = styleguidist(require('./data/styleguide.config.js'));
-	t.truthy(api);
-	t.is(typeof api.build, 'function');
-	t.is(typeof api.server, 'function');
-	t.is(typeof api.makeWebpackConfig, 'function');
-});
+describe('scripts index', () => {
+	it('should return API methods', () => {
+		const api = styleguidist(require('./data/styleguide.config.js'));
+		t.isOk(api);
+		t.equal(typeof api.build, 'function');
+		t.equal(typeof api.server, 'function');
+		t.equal(typeof api.makeWebpackConfig, 'function');
+	});
 
-test('makeWebpackConfig should return development Webpack config', t => {
-	const api = styleguidist({ components: '*.js' });
-	const result = api.makeWebpackConfig('development');
-	t.truthy(result);
-	t.is(result.output.filename, 'build/bundle.js');
-	t.true(result.cache);
-});
+	it('makeWebpackConfig should return development Webpack config', () => {
+		const api = styleguidist({ components: '*.js' });
+		const result = api.makeWebpackConfig('development');
+		t.isOk(result);
+		t.equal(result.output.filename, 'build/bundle.js');
+		t.isTrue(result.cache);
+	});
 
-test('makeWebpackConfig should return production Webpack config', t => {
-	const api = styleguidist({ components: '*.js' });
-	const result = api.makeWebpackConfig('production');
-	t.truthy(result);
-	t.is(result.output.filename, 'build/bundle.js');
-	t.false(result.cache);
+	it('makeWebpackConfig should return production Webpack config', () => {
+		const api = styleguidist({ components: '*.js' });
+		const result = api.makeWebpackConfig('production');
+		t.isOk(result);
+		t.equal(result.output.filename, 'build/bundle.js');
+		t.isFalse(result.cache);
+	});
 });

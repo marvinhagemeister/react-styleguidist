@@ -1,4 +1,4 @@
-import test from 'ava';
+import { assert as t } from 'chai';
 import getRequires, {
 	REQUIRE_ANYTHING_BASE,
 	REQUIRE_ANYTHING_REGEX,
@@ -11,55 +11,57 @@ import getRequires, {
 
 const regex = new RegExp(REQUIRE_ANYTHING_BASE);
 
-test('should match require invocations', t => {
-	t.regex(`require("foo")`, regex);
-	t.regex(`require ( "foo" )`, regex);
-	t.regex(`require('foo')`, regex);
-	t.regex(`require(foo)`, regex);
-	t.regex(`require("f" + "o" + "o")`, regex);
-	t.regex(`require("f" + ("o" + "o"))`, regex);
-	t.regex(`function f() { require("foo"); }`, regex);
-});
+describe('loaders-utils-getRequires', () => {
+	it('should match require invocations', () => {
+		t.match(`require("foo")`, regex);
+		t.match(`require ( "foo" )`, regex);
+		t.match(`require('foo')`, regex);
+		t.match(`require(foo)`, regex);
+		t.match(`require("f" + "o" + "o")`, regex);
+		t.match(`require("f" + ("o" + "o"))`, regex);
+		t.match(`function f() { require("foo"); }`, regex);
+	});
 
-test('should not match other occurrences of require', t => {
-	t.notRegex(`"required field"`, regex);
-	t.notRegex(`var f = require;`, regex);
-	t.notRegex(`require.call(module, "foo")`, regex);
-});
+	it('should not match other occurrences of require', () => {
+		t.notMatch(`"required field"`, regex);
+		t.notMatch(`var f = require;`, regex);
+		t.notMatch(`require.call(module, "foo")`, regex);
+	});
 
-test('should match many requires in the same line correctly', t => {
-	const replaced = `require('foo');require('bar')`.replace(REQUIRE_ANYTHING_REGEX, 'x');
-	t.is(replaced, 'x;x');
-});
+	it('should match many requires in the same line correctly', () => {
+		const replaced = `require('foo');require('bar')`.replace(REQUIRE_ANYTHING_REGEX, 'x');
+		t.equal(replaced, 'x;x');
+	});
 
-// SIMPLE_STRING_REGEX
+	// SIMPLE_STRING_REGEX
 
-test('should match simple strings and nothing else', t => {
-	const regex = SIMPLE_STRING_REGEX;
+	it('should match simple strings and nothing else', () => {
+		const regex = SIMPLE_STRING_REGEX;
 
-	t.regex(`"foo"`, regex);
-	t.regex(`'foo'`, regex);
-	t.regex(`"fo'o"`, regex);
-	t.regex(`'fo"o'`, regex);
-	t.regex(`'.,:;!§$&/()=@^12345'`, regex);
+		t.match(`"foo"`, regex);
+		t.match(`'foo'`, regex);
+		t.match(`"fo'o"`, regex);
+		t.match(`'fo"o'`, regex);
+		t.match(`'.,:;!§$&/()=@^12345'`, regex);
 
-	t.notRegex(`foo`, regex);
-	t.notRegex(`'foo"`, regex);
-	t.notRegex(`"foo'`, regex);
+		t.notMatch(`foo`, regex);
+		t.notMatch(`'foo"`, regex);
+		t.notMatch(`"foo'`, regex);
 
-	// These 2 are actually valid in JS, but don't work with this regex.
-	// But you shouldn't be using these in your requires anyway.
-	t.notRegex(`"fo\\"o"`, regex);
-	t.notRegex(`'fo\\'o'`, regex);
+		// These 2 are actually valid in JS, but don't work with this regex.
+		// But you shouldn't be using these in your requires anyway.
+		t.notMatch(`"fo\\"o"`, regex);
+		t.notMatch(`'fo\\'o'`, regex);
 
-	t.notRegex(`"foo" + "bar"`, regex);
-});
+		t.notMatch(`"foo" + "bar"`, regex);
+	});
 
-// getRequires
+	// getRequires
 
-test('should find calls to require in code', t => {
-	t.deepEqual(getRequires(`require('foo')`), ['foo']);
-	t.deepEqual(getRequires(`require('./foo')`), ['./foo']);
-	t.deepEqual(getRequires(`require('foo');require('bar')`), ['foo', 'bar']);
-	t.throws(() => getRequires(`require('foo' + 'bar')`), Error);
+	it('should find calls to require in code', () => {
+		t.deepEqual(getRequires(`require('foo')`), ['foo']);
+		t.deepEqual(getRequires(`require('./foo')`), ['./foo']);
+		t.deepEqual(getRequires(`require('foo');require('bar')`), ['foo', 'bar']);
+		t.throws(() => getRequires(`require('foo' + 'bar')`), Error);
+	});
 });

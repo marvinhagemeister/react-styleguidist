@@ -1,8 +1,9 @@
-import test from 'ava';
+import { assert as t } from 'chai';
 import examplesLoader from '../loaders/examples.loader';
 
-test('should return valid, parsable JS', t => {
-	let exampleMarkdown = `
+describe('loader-examples', () => {
+	it('should return valid, parsable JS', () => {
+		let exampleMarkdown = `
 # header
 
 	const _ = require('lodash');
@@ -14,15 +15,15 @@ text
 <span/>
 \`\`\`
 `;
-	let result = examplesLoader.call({}, exampleMarkdown);
-	t.truthy(result);
-	t.notThrows(() => new Function(result), SyntaxError);  // eslint-disable-line no-new-func
-});
+		let result = examplesLoader.call({}, exampleMarkdown);
+		t.isOk(result);
+		t.doesNotThrow(() => new Function(result), SyntaxError);  // eslint-disable-line no-new-func
+	});
 
-// componentName query option
+	// componentName query option
 
-test('should replace all occurrences of __COMPONENT__ with provided query.componentName', t => {
-	const exampleMarkdown = `
+	it('should replace all occurrences of __COMPONENT__ with provided query.componentName', () => {
+		const exampleMarkdown = `
 <div>
 	<__COMPONENT__>
 		<span>text</span>
@@ -32,8 +33,9 @@ test('should replace all occurrences of __COMPONENT__ with provided query.compon
 </div>
 `;
 
-	const result = examplesLoader.call({ query: '?componentName=FooComponent' }, exampleMarkdown);
-	t.notRegex(result, /__COMPONENT__/);
-	t.regex(result, /FooComponent/);
-	t.is(result.match(/FooComponent/g).length, 4);
+		const result = examplesLoader.call({ query: '?componentName=FooComponent' }, exampleMarkdown);
+		t.notMatch(result, /__COMPONENT__/);
+		t.match(result, /FooComponent/);
+		t.equal(result.match(/FooComponent/g).length, 4);
+	});
 });

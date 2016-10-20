@@ -1,4 +1,4 @@
-import test from 'ava';
+import { assert as t } from 'chai';
 const _ = require('lodash');
 import * as utils from '../src/utils/utils';
 
@@ -40,132 +40,136 @@ const SECTIONS = [
 ];
 
 let sourceGlobalLength;
-test.beforeEach(() => {
-	sourceGlobalLength = Object.keys(global).length;
-});
-test.afterEach(() => {
-	delete global.Foo;
-	delete global.Bar;
-});
 
 // setComponentsNames
 
-test('should set name property to each component', t => {
-	let result = utils.setComponentsNames([
-		{
-			module: {
-				displayName: 'Foo',
+describe('utils', () => {
+	beforeEach(() => {
+		sourceGlobalLength = Object.keys(global).length;
+	});
+
+	afterEach(() => {
+		delete global.Foo;
+		delete global.Bar;
+	});
+
+	it('should set name property to each component', () => {
+		let result = utils.setComponentsNames([
+			{
+				module: {
+					displayName: 'Foo',
+				},
 			},
-		},
-		{
-			module: {
+			{
+				module: {
+					name: 'Bar',
+				},
+			},
+			{
+				module: {
+					displayName: 'Foo',
+				},
+				props: {
+					displayName: 'FooOverride',
+				},
+			},
+		]);
+		t.deepEqual(_.map(result, 'name'), ['Foo', 'Bar', 'FooOverride']);
+	});
+
+	// globalizeComponents
+
+	it('should set each component’s module as a global variable', () => {
+		utils.globalizeComponents([
+			{
+				name: 'Foo',
+				module: 13,
+			},
+			{
 				name: 'Bar',
+				module: 27,
 			},
-		},
-		{
-			module: {
-				displayName: 'Foo',
+			{
+				name: 'PathedFoo',
+				module: { a: 32 },
+				props: {
+					path: 'a',
+				},
 			},
-			props: {
-				displayName: 'FooOverride',
-			},
-		},
-	]);
-	t.deepEqual(_.map(result, 'name'), ['Foo', 'Bar', 'FooOverride']);
-});
+		]);
+		t.equal(Object.keys(global).length, sourceGlobalLength + 3);
+		t.equal(global.Foo, 13);
+		t.equal(global.Bar, 27);
+		t.equal(global.PathedFoo, 32);
+	});
 
-// globalizeComponents
+	// getFilterRegExp
 
-test('should set each component’s module as a global variable', t => {
-	utils.globalizeComponents([
-		{
-			name: 'Foo',
-			module: 13,
-		},
-		{
-			name: 'Bar',
-			module: 27,
-		},
-		{
-			name: 'PathedFoo',
-			module: { a: 32 },
-			props: {
-				path: 'a',
-			},
-		},
-	]);
-	t.is(Object.keys(global).length, sourceGlobalLength + 3);
-	t.is(global.Foo, 13);
-	t.is(global.Bar, 27);
-	t.is(global.PathedFoo, 32);
-});
+	it('should return a RegExp', () => {
+		const result = utils.getFilterRegExp('');
+		t.ok(result instanceof RegExp);
+	});
 
-// getFilterRegExp
+	it('RegExp should fuzzy match a string', () => {
+		const result = utils.getFilterRegExp('btn');
+		t.match('button', result);
+	});
 
-test('should return a RegExp', t => {
-	const result = utils.getFilterRegExp('');
-	t.true(result instanceof RegExp);
-});
+	it('RegExp should not match when string is different', () => {
+		const result = utils.getFilterRegExp('buttons');
+		t.notMatch('button', result);
+	});
 
-test('RegExp should fuzzy match a string', t => {
-	const result = utils.getFilterRegExp('btn');
-	t.regex('button', result);
-});
+	it('should not throw when query contains special characters', () => {
+		const fn = () => utils.getFilterRegExp('\\');
+		t.doesNotThrow(fn);
+	});
 
-test('RegExp should not match when string is different', t => {
-	const result = utils.getFilterRegExp('buttons');
-	t.notRegex('button', result);
-});
+	it('RegExp should ignore non-alphanumeric characters', () => {
+		const result = utils.getFilterRegExp('#$b()tn');
+		t.match('button', result);
+	});
 
-test('should not throw when query contains special characters', t => {
-	const fn = () => utils.getFilterRegExp('\\');
-	t.notThrows(fn);
-});
+	// filterComponentsByName
 
-test('RegExp should ignore non-alphanumeric characters', t => {
-	const result = utils.getFilterRegExp('#$b()tn');
-	t.regex('button', result);
-});
+	it('should return initial list with empty query', () => {
+		const result = utils.filterComponentsByName(COMPONENTS, '');
+		t.deepEqual(result, COMPONENTS);
+	});
 
-// filterComponentsByName
+	it('should return filtered list, should ignore case', () => {
+		const result = utils.filterComponentsByName(COMPONENTS, 'button');
+		t.deepEqual(result, [{ name: 'Button' }]);
+	});
 
-test('should return initial list with empty query', t => {
-	const result = utils.filterComponentsByName(COMPONENTS, '');
-	t.deepEqual(result, COMPONENTS);
-});
+	it('should return empty list when nothing found', () => {
+		const result = utils.filterComponentsByName(COMPONENTS, 'pizza');
+		t.deepEqual(result, []);
+	});
 
-test('should return filtered list, should ignore case', t => {
-	const result = utils.filterComponentsByName(COMPONENTS, 'button');
-	t.deepEqual(result, [{ name: 'Button' }]);
-});
+	// filterComponentsByExactName
 
-test('should return empty list when nothing found', t => {
-	const result = utils.filterComponentsByName(COMPONENTS, 'pizza');
-	t.deepEqual(result, []);
-});
+	it('should return components with exact name', () => {
+		const result = utils.filterComponentsByExactName(COMPONENTS, 'Image');
+		t.deepEqual(result, [COMPONENTS[1]]);
+	});
 
-// filterComponentsByExactName
+	// filterComponentsInSectionsByExactName
 
-test('should return components with exact name', t => {
-	const result = utils.filterComponentsByExactName(COMPONENTS, 'Image');
-	t.deepEqual(result, [COMPONENTS[1]]);
-});
+	it('should return components at any level with exact name', () => {
+		const result = utils.filterComponentsInSectionsByExactName(SECTIONS, 'Image');
+		t.deepEqual(result, [COMPONENTS[1]]);
+	});
 
-// filterComponentsInSectionsByExactName
+	// getComponentNameFromHash
 
-test('should return components at any level with exact name', t => {
-	const result = utils.filterComponentsInSectionsByExactName(SECTIONS, 'Image');
-	t.deepEqual(result, [COMPONENTS[1]]);
-});
+	it('should return important part of hash if it contains component name', () => {
+		const result = utils.getComponentNameFromHash('#!/Button');
+		t.deepEqual(result, 'Button');
+	});
 
-// getComponentNameFromHash
-
-test('should return important part of hash if it contains component name', t => {
-	const result = utils.getComponentNameFromHash('#!/Button');
-	t.deepEqual(result, 'Button');
-});
-
-test('should return null if hash contains no component name', t => {
-	const result = utils.getComponentNameFromHash('Button');
-	t.deepEqual(result, null);
+	it('should return null if hash contains no component name', () => {
+		const result = utils.getComponentNameFromHash('Button');
+		t.deepEqual(result, null);
+	});
 });
