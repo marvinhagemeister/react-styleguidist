@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
 
-import s from './Editor.css';
-
 const EditorRenderer = ({ children }) => (
-	<div className={s.root}>
+	<div className="CodeMirror">
 		{children}
 	</div>
 );

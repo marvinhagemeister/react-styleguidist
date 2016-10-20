@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
 
-const s = require('./PlaygroundError.css');
-
 const PlaygroundError = ({ message }) => (
-	<pre className={s.root}>{message}</pre>
+	<pre className="rsg-playground-error rsg-monospace white error-bg">{message}</pre>
 );
 
 PlaygroundError.propTypes = {

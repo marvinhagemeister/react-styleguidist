@@ -1,16 +1,15 @@
 import React, { PropTypes } from 'react';
-import cx from 'classnames';
-
-import s from './ComponentsList.css';
 
 const ComponentsListRenderer = ({ items }) => (
-	<div className={s.list}>
-		{items.map(({ heading, name, content }) => (
-			<div className={s.item} key={name}>
-				<a className={cx(s.link, heading && s.heading)} href={'#' + name}>{name}</a>
+	<div className="rsg-components-list">
+		{items.map(({ heading, name, content }) => {
+			const headingCss = heading ? 'rsg-bold' : '';
+			return (<div className="rsg-components-list-item" key={name}>
+				<a className={'link ' + headingCss} href={'#' + name}>{name}</a>
 				{content}
 			</div>
-		))}
+			);}
+		)}
 	</div>
 );
 

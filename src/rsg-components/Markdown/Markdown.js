@@ -1,32 +1,90 @@
 import { PropTypes } from 'react';
-import mapValues from 'lodash/mapValues';
 import renderMarkdown from '../../utils/markdown-to-jsx';
 
-import s from './Markdown.css';
+const tags = [
+	'a',
+	'p',
+	'ul',
+	'ol',
+	'blockquote',
+	'table',
+	'thead',
+	'td',
+	'th',
+	'hr',
+	'h3',
+	'h4',
+	'h5',
+	'h6',
+	'code',
+	'pre',
+	'em',
+	'strong',
+	'img',
+	'li',
+	'tr',
+	'tbody',
+];
+
+const textTags = [
+	'p',
+	'ul',
+	'ol',
+	'blockquote',
+	'table',
+	'hr',
+	'h3',
+	'h4',
+	'h5',
+	'h6',
+];
 
 // Custom CSS classes for each tag: <em> → <em className={s.em}>.
-const overrides = mapValues(s, value => ({
-	props: {
-		className: value,
-	},
-}));
+const overrides = tags.map(value => {
+	let css = 'rsg-' + value;
+	if (value === 'a') {
+		css += ' link';
+	} else if (textTags.indexOf(value) > -1) {
+		css += ' rsg-font rsg-text-tag';
+	} else if (value === 'code') {
+		css += ' rsg-reset rsg-monospace';
+	} else if (value === 'pre') {
+		css += ' rsg-code-bg rsg-border';
+	} else if (value === 'hr') {
+		css += ' rsg-border';
+	} else if (value === 'thead') {
+		css += ' rsg-border';
+	}
+
+	return {
+		[value]: {
+			props: {
+				className: css,
+			},
+		},
+	};
+});
 
 // Inline mode: replace <p> (usual root component) with <span>
-const overridesInline = {
-	...overrides,
+let overridesInline = {
 	p: {
 		component: 'span',
 		props: {
-			className: s.base,
+			className: 'rsg-md-base font',
 		},
 	},
 };
+
+overrides.forEach(item => {
+	const key = Object.keys(item)[0];
+	overridesInline[key] = item[key];
+});
 
 export default function Markdown({
 	text,
 	inline,
 }) {
-	const options = { overrides: inline ? overridesInline : overrides };
+	const options = { overrides: overridesInline };
 	return renderMarkdown(text, options);
 }
 
