@@ -1,14 +1,20 @@
-import test from 'ava';
+import { shallow } from 'enzyme';
+import unexpected from 'unexpected';
+import unexpectedReact from 'unexpected-react';
 import React from 'react';
 import PlaygroundErrorRenderer from './PlaygroundErrorRenderer';
 
-test('renderer should render message', () => {
-	const message = 'Hello *world*!';
-	const actual = shallow(
-		<PlaygroundErrorRenderer message={message} />
-	);
+const expect = unexpected.use(unexpectedReact);
 
-	expect(actual.node, 'to contain',
-		<pre>{message}</pre>
-	);
+describe('PlaygroundError', () => {
+	it('renderer should render message', () => {
+		const message = 'Hello *world*!';
+		const actual = shallow(
+			<PlaygroundErrorRenderer message={message} />
+		);
+
+		expect(actual.node, 'to contain',
+			<pre>{message}</pre>
+		);
+	});
 });

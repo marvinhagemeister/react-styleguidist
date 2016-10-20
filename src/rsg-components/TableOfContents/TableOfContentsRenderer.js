@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import s from './TableOfContents.css';
-
 const TableOfContentsRenderer = ({ items, searchTerm, onSearchTermChange }) => {
 	return (
 		<div>

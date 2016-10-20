@@ -1,8 +1,12 @@
-import test from 'ava';
+import { shallow } from 'enzyme';
+import unexpected from 'unexpected';
+import unexpectedReact from 'unexpected-react';
 import React from 'react';
 import ComponentsList from '../ComponentsList';
 import TableOfContents from './TableOfContents';
 import TableOfContentsRenderer from './TableOfContentsRenderer';
+
+const expect = unexpected.use(unexpectedReact);
 
 const components = [
 	{
@@ -42,7 +46,7 @@ const sections = [
 	},
 ];
 
-test('should render a renderer', () => {
+it('should render a renderer', () => {
 	const actual = shallow(
 		<TableOfContents components={components} sections={[]} />
 	);
@@ -54,7 +58,7 @@ test('should render a renderer', () => {
 	);
 });
 
-test('should render renderer with sections with nested components', () => {
+it('should render renderer with sections with nested components', () => {
 	const actual = shallow(
 		<TableOfContents components={[]} sections={sections} />
 	);
@@ -75,7 +79,7 @@ test('should render renderer with sections with nested components', () => {
 });
 
 
-test('should filter list when search field contains a query', () => {
+it('should filter list when search field contains a query', () => {
 	const searchTerm = 'but';
 	const actual = shallow(
 		<TableOfContents components={components} sections={[]} />
@@ -91,7 +95,7 @@ test('should filter list when search field contains a query', () => {
 	);
 });
 
-test('should render a filtered list, should hide empty sections', () => {
+it('should render a filtered list, should hide empty sections', () => {
 	const searchTerm = 'inp';
 	const actual = shallow(
 		<TableOfContents components={[]} sections={sections} />
@@ -112,7 +116,7 @@ test('should render a filtered list, should hide empty sections', () => {
 	);
 });
 
-test('should filter section names', () => {
+it('should filter section names', () => {
 	const searchTerm = 'frm';
 	const actual = shallow(
 		<TableOfContents components={[]} sections={sections} />

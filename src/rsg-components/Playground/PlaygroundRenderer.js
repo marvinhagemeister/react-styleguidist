@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import Editor from 'rsg-components/Editor';
-import Preview from 'rsg-components/Preview';
+import Editor from '../Editor';
+import Preview from '../Preview';
 
 const PlaygroundRenderer = ({ code, showCode, evalInContext, onCodeToggle }) => (
 	<div className="rsg-playground rsg-border">

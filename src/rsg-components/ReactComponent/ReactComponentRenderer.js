@@ -1,6 +1,14 @@
 import React, { PropTypes } from 'react';
 
-const s = require('./ReactComponent.css');
+const s = {
+	root: 'root',
+	primaryHeading: 'primary-heading',
+	pathLine: 'path-line',
+	header: 'header',
+	isolatedLink: 'isolatedLink',
+	props: 'props',
+	heading: 'heading',
+};
 
 const ReactComponentRenderer = ({ name, pathLine, description, props, examples, sidebar }) => {
 	return (

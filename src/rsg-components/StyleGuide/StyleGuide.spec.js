@@ -1,10 +1,14 @@
-import test from 'ava';
+import { shallow } from 'enzyme';
+import unexpected from 'unexpected';
+import unexpectedReact from 'unexpected-react';
 import React from 'react';
 import Components from '../Components';
 import Message from '../Message';
 import TableOfContents from '../TableOfContents';
 import StyleGuide from './StyleGuide';
 import StyleGuideRenderer from './StyleGuideRenderer';
+
+const expect = unexpected.use(unexpectedReact);
 
 const components = [
 	{
@@ -29,7 +33,7 @@ const config = {
 	title: 'Hello',
 };
 
-test('should render components list', () => {
+it('should render components list', () => {
 	const actual = shallow(
 		<StyleGuide
 			config={config}
@@ -49,7 +53,7 @@ test('should render components list', () => {
 	);
 });
 
-test('should pass error message instead of components list when there is no components and sections', () => {
+it('should pass error message instead of components list when there is no components and sections', () => {
 	const actual = shallow(
 		<StyleGuide
 			config={config}
@@ -69,7 +73,7 @@ test('should pass error message instead of components list when there is no comp
 	);
 });
 
-test('renderer should render title, table on contents and components', () => {
+it('renderer should render title, table on contents and components', () => {
 	const actual = shallow(
 		<StyleGuideRenderer
 			title={config.title}

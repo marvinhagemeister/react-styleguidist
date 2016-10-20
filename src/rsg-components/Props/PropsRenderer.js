@@ -1,9 +1,15 @@
 import React, { PropTypes } from 'react';
-import Code from 'rsg-components/Code';
-import Markdown from 'rsg-components/Markdown';
+import Code from '../Code';
+import Markdown from '../Markdown';
 import { unquote, getType } from './util';
 
-import s from './Props.css';
+const s = {
+	name: 'name',
+	type: 'type',
+	cell: 'cell',
+	cellDesc: 'cell-description',
+	required: 'required',
+};
 
 function renderRows(props) {
 	let rows = [];

@@ -1,43 +1,50 @@
-import test from 'ava';
+import { shallow, render } from 'enzyme';
+import unexpected from 'unexpected';
+import unexpectedReact from 'unexpected-react';
 import React from 'react';
 import Markdown from './Markdown';
+import { assert as t } from 'chai';
 
-test('should render Markdown with custom CSS classes', t => {
-	const markdown = `
+const expect = unexpected.use(unexpectedReact);
+
+describe('Markdown', () => {
+	it('should render Markdown with custom CSS classes', () => {
+		const markdown = `
 # Header
 
 Text with *some* **formatting** and a [link](/foo).
 
 ![Image](/bar.png)`;
-	const actual = render(
-		<Markdown text={markdown} />
-	);
-	const expected = render(
-		<div>
-			<h3 className="Test__h3 Test__font">Header</h3>
-			<p className="Test__p Test__font">
-				Text with <em className="Test__em">some</em> <strong className="Test__strong">
-				formatting</strong> and a <a className="Test__a Test__link" href="/foo">link</a>.
+		const actual = render(
+			<Markdown text={markdown} />
+		);
+		const expected = render(
+			<div>
+				<h3 className="rsg-h3 rsg-font rsg-text-tag">Header</h3>
+				<p className="rsg-p rsg-font rsg-text-tag">
+					Text with <em className="rsg-em">some</em> <strong className="rsg-strong">
+						formatting</strong> and a <a className="rsg-a link" href="/foo">link</a>.
 			</p>
-			<p className="Test__p Test__font">
-				<img className="Test__img" alt="Image" src="/bar.png" />
-			</p>
-		</div>
-	);
+				<p className="rsg-p rsg-font rsg-text-tag">
+					<img className="rsg-img" alt="Image" src="/bar.png" />
+				</p>
+			</div>
+		);
 
-	t.is(actual.html(), expected.html());
-});
+		t.deepEqual(actual.html(), expected.html());
+	});
 
-test('should render Markdown in span in inline mode', t => {
-	const markdown = 'Hello *world*!';
-	const actual = render(
-		<Markdown text={markdown} inline />
-	);
-	const expected = render(
-		<span className="Test__base Test__font">
-			Hello <em className="Test__em">world</em>!
-		</span>
-	);
+	it('should render Markdown in span in inline mode', () => {
+		const markdown = 'Hello *world*!';
+		const actual = render(
+			<Markdown text={markdown} inline />
+		);
+		const expected = render(
+			<span className="rsg-base rsg-font">
+				Hello <em className="rsg-em">world</em>!
+			</span>
+		);
 
-	t.is(actual.html(), expected.html());
+		t.equal(actual.html(), expected.html());
+	});
 });

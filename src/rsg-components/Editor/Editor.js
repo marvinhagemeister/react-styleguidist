@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import EditorRenderer from 'rsg-components/Editor/EditorRenderer';
+import EditorRenderer from './EditorRenderer';
 
 const Editor = ({ code }) => {
 	return (

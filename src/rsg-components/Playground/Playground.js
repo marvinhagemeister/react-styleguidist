@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import PlaygroundRenderer from 'rsg-components/Playground/PlaygroundRenderer';
+import PlaygroundRenderer from '../Playground/PlaygroundRenderer';
 
 export default class Playground extends Component {
 	static propTypes = {

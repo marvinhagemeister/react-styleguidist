@@ -1,6 +1,10 @@
-import test from 'ava';
+import { shallow } from 'enzyme';
+import unexpected from 'unexpected';
+import unexpectedReact from 'unexpected-react';
 import React from 'react';
 import ComponentsListRenderer from './ComponentsListRenderer';
+
+const expect = unexpected.use(unexpectedReact);
 
 const components = [
 	{
@@ -14,16 +18,18 @@ const components = [
 	},
 ];
 
-test('should render sections with nested components', () => {
-	const actual = shallow(
-		<ComponentsListRenderer items={components} />
-	);
+describe('ComponentsList', () => {
+	it('should render sections with nested components', () => {
+		const actual = shallow(
+			<ComponentsListRenderer items={components} />
+		);
 
-	expect(actual.node, 'to contain',
-		<div>
-			<div>Button</div>
-			<div>Input</div>
-			<div>Textarea</div>
-		</div>
-	);
+		expect(actual.node, 'to contain',
+			<div>
+				<div>Button</div>
+				<div>Input</div>
+				<div>Textarea</div>
+			</div>
+		);
+	});
 });

@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import isEmpty from 'lodash/isEmpty';
-import Components from 'rsg-components/Components';
-import TableOfContents from 'rsg-components/TableOfContents';
-import Message from 'rsg-components/Message';
-import StyleGuideRenderer from 'rsg-components/StyleGuide/StyleGuideRenderer';
+import Components from '../Components';
+import TableOfContents from '../TableOfContents';
+import Message from '../Message';
+import StyleGuideRenderer from '../StyleGuide/StyleGuideRenderer';
 import { HOMEPAGE, DOCS_CONFIG } from '../../../scripts/consts';
 
 export default class StyleGuide extends Component {

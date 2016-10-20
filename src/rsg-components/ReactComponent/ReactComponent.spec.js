@@ -1,4 +1,6 @@
-import test from 'ava';
+import { shallow } from 'enzyme';
+import unexpected from 'unexpected';
+import unexpectedReact from 'unexpected-react';
 import React from 'react';
 import noop from 'lodash/noop';
 import Examples from '../Examples';
@@ -6,6 +8,8 @@ import Markdown from '../Markdown';
 import Playground from '../Playground';
 import ReactComponent from './ReactComponent';
 import ReactComponentRenderer from './ReactComponentRenderer';
+
+const expect = unexpected.use(unexpectedReact);
 
 const component = {
 	name: 'Foo',
@@ -26,7 +30,7 @@ const component = {
 	],
 };
 
-test('should render component renderer', () => {
+it('should render component renderer', () => {
 	const actual = shallow(
 		<ReactComponent
 			component={component}
@@ -43,7 +47,7 @@ test('should render component renderer', () => {
 	);
 });
 
-test('render should render component', () => {
+it('render should render component', () => {
 	const actual = shallow(
 		<ReactComponentRenderer
 			name={component.name}

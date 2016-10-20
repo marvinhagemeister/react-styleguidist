@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-import Markdown from 'rsg-components/Markdown';
-import Props from 'rsg-components/Props';
-import Examples from 'rsg-components/Examples';
-import ReactComponentRenderer from 'rsg-components/ReactComponent/ReactComponentRenderer';
+import Markdown from '../Markdown';
+import Props from '../Props';
+import Examples from '../Examples';
+import ReactComponentRenderer from './ReactComponentRenderer';
 
 export default function ReactComponent({
 	component,

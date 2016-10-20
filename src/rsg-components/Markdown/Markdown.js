@@ -70,21 +70,26 @@ let overridesInline = {
 	p: {
 		component: 'span',
 		props: {
-			className: 'rsg-md-base font',
+			className: 'rsg-base rsg-font',
 		},
 	},
 };
 
+let newOver = {};
+
 overrides.forEach(item => {
 	const key = Object.keys(item)[0];
-	overridesInline[key] = item[key];
+	if (key !== 'p') {
+		overridesInline[key] = item[key];
+	}
+	newOver[key] = item[key];
 });
 
 export default function Markdown({
 	text,
 	inline,
 }) {
-	const options = { overrides: overridesInline };
+	const options = { overrides: !inline ? newOver : overridesInline };
 	return renderMarkdown(text, options);
 }
 

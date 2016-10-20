@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import Playground from 'rsg-components/Playground';
-import Markdown from 'rsg-components/Markdown';
+import Playground from '../Playground';
+import Markdown from '../Markdown';
 
 const Examples = ({ examples }, { codeKey }) => {
 	return (

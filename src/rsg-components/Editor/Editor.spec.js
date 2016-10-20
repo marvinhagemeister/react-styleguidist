@@ -1,16 +1,20 @@
-import test from 'ava';
+import { shallow } from 'enzyme';
+import unexpected from 'unexpected';
+import unexpectedReact from 'unexpected-react';
 import React from 'react';
 import EditorRenderer from './EditorRenderer';
 
-// We do not test Editor component because it requires Codemirror that do not work in Node environment.
+const expect = unexpected.use(unexpectedReact);
 
-test('renderer should render editor', () => {
-	const editor = <div>editor</div>;
-	const actual = shallow(
-		<EditorRenderer>{editor}</EditorRenderer>
-	);
+describe('Editor', () => {
+	it('renderer should render editor', () => {
+		const editor = <div>editor</div>;
+		const actual = shallow(
+			<EditorRenderer>{editor}</EditorRenderer>
+		);
 
-	expect(actual.node, 'to contain',
-		<div>{editor}</div>
-	);
-});
+		expect(actual.node, 'to contain',
+			<div>{editor}</div>
+		);
+	});
+})

@@ -1,21 +1,27 @@
-import test from 'ava';
+import { shallow } from 'enzyme';
+import unexpected from 'unexpected';
+import unexpectedReact from 'unexpected-react';
 import React from 'react';
 import noop from 'lodash/noop';
 import Preview from '../Preview';
 
 const code = '<button>OK</button>';
 
-test('should render component renderer', () => {
-	const actual = shallow(
-		<Preview
-			code={code}
-			evalInContext={noop}
-		/>
-	);
+const expect = unexpected.use(unexpectedReact);
 
-	expect(actual.node, 'to contain exactly',
-		<div>
-			<div></div>
-		</div>
-	);
+describe('Preview', () => {
+	it('should render component renderer', () => {
+		const actual = shallow(
+			<Preview
+				code={code}
+				evalInContext={noop}
+				/>
+		);
+
+		expect(actual.node, 'to contain exactly',
+			<div>
+				<div></div>
+			</div>
+		);
+	});
 });

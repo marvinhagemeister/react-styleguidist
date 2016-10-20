@@ -1,6 +1,11 @@
 import React, { PropTypes } from 'react';
 
-const s = require('./Section.css');
+const s = {
+	root: 'root',
+	header: 'header',
+	heading: 'heading',
+	anchor: 'anchor',
+};
 
 const SectionRenderer = ({ name, content, components }) => {
 	return (

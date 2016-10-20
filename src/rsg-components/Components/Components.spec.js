@@ -1,9 +1,13 @@
-import test from 'ava';
+import { shallow } from 'enzyme';
+import unexpected from 'unexpected';
+import unexpectedReact from 'unexpected-react';
 import React from 'react';
 import ReactComponent from '../ReactComponent';
 import Sections from '../Sections';
 import Components from './Components';
 import ComponentsRenderer from './ComponentsRenderer';
+
+const expect = unexpected.use(unexpectedReact);
 
 const components = [
 	{
@@ -24,41 +28,43 @@ const components = [
 	},
 ];
 
-test('should render components list', () => {
-	const actual = shallow(
-		<Components
-			components={components}
-			sections={[]}
-		/>
-	);
+describe('Component', () => {
+	it('should render components list', () => {
+		const actual = shallow(
+			<Components
+				components={components}
+				sections={[]}
+			/>
+		);
 
-	expect(actual.node, 'to contain',
-		<ComponentsRenderer
-			components={[
-				<ReactComponent component={components[0]} />,
-				<ReactComponent component={components[1]} />,
-			]}
-			sections={<Sections sections={[]} />}
-		/>
-	);
-});
+		expect(actual.node, 'to contain',
+			<ComponentsRenderer
+				components={[
+					<ReactComponent key={1} component={components[0]} />,
+					<ReactComponent key={2} component={components[1]} />,
+				]}
+				sections={<Sections sections={[]} />}
+				/>
+		);
+	});
 
-test('renderer should render components list layout', () => {
-	const actual = shallow(
-		<ComponentsRenderer
-			components={[
-				<ReactComponent component={components[0]} />,
-				<ReactComponent component={components[1]} />,
-			]}
-			sections={<Sections sections={[]} />}
-		/>
-	);
+	it('renderer should render components list layout', () => {
+		const actual = shallow(
+			<ComponentsRenderer
+				components={[
+					<ReactComponent key={1} component={components[0]} />,
+					<ReactComponent key={2} component={components[1]} />,
+				]}
+				sections={<Sections sections={[]} />}
+				/>
+		);
 
-	expect(actual.node, 'to contain',
-		<div>
-			<ReactComponent component={components[0]} />
-			<ReactComponent component={components[1]} />
-			<Sections sections={[]} />
-		</div>
-	);
+		expect(actual.node, 'to contain',
+			<div>
+				<ReactComponent component={components[0]} />
+				<ReactComponent component={components[1]} />
+				<Sections sections={[]} />
+			</div>
+		);
+	});
 });

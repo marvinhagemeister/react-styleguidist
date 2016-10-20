@@ -3,8 +3,8 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { transform } from 'babel-standalone';
-import PlaygroundError from 'rsg-components/PlaygroundError';
-import Wrapper from 'rsg-components/Wrapper';
+import PlaygroundError from '../PlaygroundError';
+import Wrapper from '../Wrapper';
 
 // TODO: extract compiler to a separate module
 

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
-import ReactComponent from 'rsg-components/ReactComponent';
-import Sections from 'rsg-components/Sections';
-import ComponentsRenderer from 'rsg-components/Components/ComponentsRenderer';
+import ReactComponent from '../ReactComponent';
+import Sections from '../Sections';
+import ComponentsRenderer from '../Components/ComponentsRenderer';
 
 export default function Components({
 	components,

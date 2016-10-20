@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Markdown from 'rsg-components/Markdown';
+import Markdown from '../Markdown';
 
 const MessageRenderer = ({ children }) => (
 	<div className="rsg-message">

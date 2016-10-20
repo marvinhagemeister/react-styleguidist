@@ -1,10 +1,14 @@
-import test from 'ava';
+import { shallow } from 'enzyme';
+import unexpected from 'unexpected';
+import unexpectedReact from 'unexpected-react';
 import React from 'react';
 import noop from 'lodash/noop';
 import Examples from '../Examples';
 import Components from '../Components';
 import Section from './Section';
 import SectionRenderer from './SectionRenderer';
+
+const expect = unexpected.use(unexpectedReact);
 
 const section = {
 	name: 'Foo',
@@ -22,7 +26,7 @@ const section = {
 	components: [],
 };
 
-test('should render component renderer', () => {
+it('should render component renderer', () => {
 	const actual = shallow(
 		<Section
 			section={section}
@@ -38,7 +42,7 @@ test('should render component renderer', () => {
 	);
 });
 
-test('render should render component', () => {
+it('render should render component', () => {
 	const actual = shallow(
 		<SectionRenderer
 			name={section.name}

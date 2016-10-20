@@ -71,6 +71,7 @@
     "ava": "~0.16.0",
     "babel-eslint": "~7.0.0",
     "babel-register": "~6.16.3",
+    "chai": "^3.5.0",
     "cross-env": "~3.1.3",
     "css-modules-require-hook": "~4.0.5",
     "dog-names": "~1.0.2",
@@ -80,6 +81,7 @@
     "eslint-plugin-react": "~6.4.1",
     "expect-react-shallow": "~1.2.1",
     "gh-pages": "~0.11.0",
+    "mocha": "^3.1.2",
     "mock-require": "~1.3.0",
     "react": "~15.3.2",
     "react-addons-test-utils": "~15.3.2",
@@ -91,6 +93,7 @@
     "webpack": "1.13.2 || ^2.1.0-beta"
   },
   "scripts": {
+    "test2": "mocha --compilers js:babel-register 'src/**/*.spec.js'",
     "test": "npm run lint && npm run test:ava",
     "test:ava": "cross-env NODE_ENV=test ava",
     "test:watch": "cross-env NODE_ENV=test ava --watch",

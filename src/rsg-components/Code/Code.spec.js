@@ -1,14 +1,20 @@
-import test from 'ava';
+import { shallow } from 'enzyme';
+import unexpected from 'unexpected';
+import unexpectedReact from 'unexpected-react';
 import React from 'react';
 import CodeRenderer from './CodeRenderer';
 
-test('renderer should render code', () => {
-	const code = '<button>OK</button>';
-	const actual = shallow(
-		<CodeRenderer>{code}</CodeRenderer>
-	);
+const expect = unexpected.use(unexpectedReact);
 
-	expect(actual.node, 'to contain',
-		<code>{code}</code>
-	);
+describe('Code', () => {
+	it('renderer should render code', () => {
+		const code = '<button>OK</button>';
+		const actual = shallow(
+			<CodeRenderer>{code}</CodeRenderer>
+		);
+
+		expect(actual.node, 'to contain',
+			<code>{code}</code>
+		);
+	});
 });
