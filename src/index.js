@@ -10,9 +10,6 @@ import {
 } from './utils/utils';
 import StyleGuide from 'rsg-components/StyleGuide';
 
-import 'highlight.js/styles/tomorrow.css';
-import './styles.css';
-
 // Make libraries available in examples
 global.React = React;
 global._ = _;
