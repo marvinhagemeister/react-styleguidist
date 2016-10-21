@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import Markdown from '../Markdown';
-import cx from 'classnames';
 
 const StyleGuideRenderer = ({ title, homepageUrl, components, toc, sidebar }) => {
 	const sidebarCss = sidebar
