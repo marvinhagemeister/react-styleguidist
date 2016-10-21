@@ -14,7 +14,6 @@ const isWebpack2 = webpackVersion === '2';
 
 const nodeModulesDir = path.resolve(__dirname, '../node_modules');
 const sourceDir = path.resolve(__dirname, '../src');
-const codeMirrorPath = getPackagePath('codemirror');
 
 // These modules are used by Remark and they need json-loader
 const jsonModules = [
@@ -56,11 +55,6 @@ module.exports = function(config, env) {
 			path: config.styleguideDir,
 			filename: 'build/bundle.js',
 		},
-		resolve: {
-			alias: {
-				codemirror: codeMirrorPath,
-			},
-		},
 		resolveLoader: {
 			moduleExtensions: ['-loader', '.loader'],
 		},
@@ -86,7 +80,6 @@ module.exports = function(config, env) {
 				{
 					test: /\.css$/,
 					include: [
-						codeMirrorPath,
 						getPackagePath('highlight.js'),
 					],
 					loader: 'style!css',
