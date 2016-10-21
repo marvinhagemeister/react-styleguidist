@@ -4,7 +4,6 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
 const prettyjson = require('prettyjson');
 const semverUtils = require('semver-utils');
@@ -59,11 +58,6 @@ module.exports = function(config, env) {
 			moduleExtensions: ['-loader', '.loader'],
 		},
 		plugins: [
-			new HtmlWebpackPlugin({
-				title: config.title,
-				template: config.template,
-				inject: true,
-			}),
 			new webpack.DefinePlugin({
 				'process.env': {
 					NODE_ENV: JSON.stringify(env),
@@ -76,18 +70,6 @@ module.exports = function(config, env) {
 					test: new RegExp(`node_modules[/\\\\](${jsonModules.join('|')})[/\\\\].*\\.json$`),
 					include: /node_modules/,
 					loader: 'json',
-				},
-				{
-					test: /\.css$/,
-					include: [
-						getPackagePath('highlight.js'),
-					],
-					loader: 'style!css',
-				},
-				{
-					test: /\.css$/,
-					include: sourceDir,
-					loader: 'style!css?modules&importLoaders=1&localIdentName=ReactStyleguidist-[name]__[local]',
 				},
 			],
 			noParse: /babel-standalone/,
@@ -151,6 +133,7 @@ module.exports = function(config, env) {
 			],
 			devtool: false,
 			cache: false,
+			profile: true,
 			plugins: [
 				new webpack.optimize.OccurrenceOrderPlugin(),
 				new webpack.optimize.DedupePlugin(),
@@ -187,9 +170,21 @@ module.exports = function(config, env) {
 			],
 			cache: true,
 			devtool: 'eval',
+			profile: true,
 			stats: {
-				colors: true,
+				hash: true,
+				version: true,
+				timings: true,
+				assets: true,
+				chunks: true,
+				modules: true,
 				reasons: true,
+				children: true,
+				source: false,
+				errors: true,
+				errorDetails: true,
+				warnings: true,
+				publicPath: true,
 			},
 
 			plugins: [
