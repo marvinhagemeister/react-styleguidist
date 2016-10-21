@@ -3,10 +3,10 @@ import React, { PropTypes } from 'react';
 const TableOfContentsRenderer = ({ items, searchTerm, onSearchTermChange }) => {
 	return (
 		<div>
-			<div className={s.root}>
+			<div className="rsg-reset rsg-font">
 				<input
 					value={searchTerm}
-					className={s.search}
+					className="rsg-search rsg-base rsg-base-bg rsg-border"
 					placeholder="Filter by name"
 					onChange={event => onSearchTermChange(event.target.value)}
 				/>

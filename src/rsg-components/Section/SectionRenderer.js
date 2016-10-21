@@ -1,18 +1,11 @@
 import React, { PropTypes } from 'react';
 
-const s = {
-	root: 'root',
-	header: 'header',
-	heading: 'heading',
-	anchor: 'anchor',
-};
-
 const SectionRenderer = ({ name, content, components }) => {
 	return (
-		<div className={s.root}>
-			<header className={s.header}>
-				<h1 className={s.heading} id={name}>
-					<a className={s.anchor} href={'#' + name}></a>
+		<div className="rsg-section">
+			<header className="rsg-section-header rsg-font">
+				<h1 className="rsg-section-heading" id={name}>
+					<a className="rsg-section-anchor" href={'#' + name}></a>
 					{name}
 				</h1>
 			</header>

@@ -1,34 +1,24 @@
 import React, { PropTypes } from 'react';
 
-const s = {
-	root: 'root',
-	primaryHeading: 'primary-heading',
-	pathLine: 'path-line',
-	header: 'header',
-	isolatedLink: 'isolatedLink',
-	props: 'props',
-	heading: 'heading',
-};
-
 const ReactComponentRenderer = ({ name, pathLine, description, props, examples, sidebar }) => {
 	return (
-		<div className={s.root}>
-			<header className={s.header}>
-				<h2 className={s.primaryHeading} id={name}>
+		<div className="rsg-component">
+			<header className="rsg-component-header rsg-font">
+				<h2 className="rsg-component-primaryHeading" id={name}>
 					{name}
 				</h2>
-				<div className={s.pathLine}>{pathLine}</div>
+				<div className="rsg-component-pathLine rsg-light rsg-monospace">{pathLine}</div>
 				{sidebar ? (
-					<a className={s.isolatedLink} href={'#!/' + name}>Open isolated ⇢</a>
+					<a className="rsg-component-isolatedLink link" href={'#!/' + name}>Open isolated ⇢</a>
 				) : (
-					<a className={s.isolatedLink} href="/">← Back</a>
+					<a className="rsg-component-isolatedLink link" href="/">← Back</a>
 				)}
 			</header>
 			<div>
 				{description}
 			</div>
-			<div className={s.props}>
-				<h3 className={s.heading}>Props</h3>
+			<div className="rsg-component-props rsg-font rsg-reset">
+				<h3 className="rsg-component-heading">Props</h3>
 				{props}
 			</div>
 			{examples}

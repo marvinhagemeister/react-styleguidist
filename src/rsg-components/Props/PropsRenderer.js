@@ -3,24 +3,16 @@ import Code from '../Code';
 import Markdown from '../Markdown';
 import { unquote, getType } from './util';
 
-const s = {
-	name: 'name',
-	type: 'type',
-	cell: 'cell',
-	cellDesc: 'cell-description',
-	required: 'required',
-};
-
 function renderRows(props) {
 	let rows = [];
 	for (let name in props) {
 		let prop = props[name];
 		rows.push(
 			<tr key={name}>
-				<td className={s.cell}><Code className={s.name}>{name}</Code></td>
-				<td className={s.cell}><Code className={s.type}>{renderType(getType(prop))}</Code></td>
-				<td className={s.cell}>{renderDefault(prop)}</td>
-				<td className={s.cell + ' ' + s.cellDesc}>{renderDescription(prop)}</td>
+				<td className="rsg-prop-cell"><Code className="rsg-name">{name}</Code></td>
+				<td className="rsg-prop-cell"><Code className="rsg-type">{renderType(getType(prop))}</Code></td>
+				<td className="rsg-prop-cell">{renderDefault(prop)}</td>
+				<td className="rsg-prop-cell rsg-prop-cellDesc">{renderDescription(prop)}</td>
 			</tr>
 		);
 	}
@@ -47,7 +39,7 @@ function renderType(type) {
 function renderDefault(prop) {
 	if (prop.required) {
 		return (
-			<span className={s.required}>Required</span>
+			<span className="rsg-light">Required</span>
 		);
 	}
 	else if (prop.defaultValue) {
@@ -99,12 +91,12 @@ function renderEnum(prop) {
 		return <span>{getType(prop).value}</span>;
 	}
 	let values = getType(prop).value.map(({ value }) => (
-		<li className={s.listItem} key={value}>
+		<li className="rsg-prop-listItem" key={value}>
 			<Code>{unquote(value)}</Code>
 		</li>
 	));
 	return (
-		<span>One of: <ul className={s.list}>{values}</ul></span>
+		<span>One of: <ul className="rsg-prop-list">{values}</ul></span>
 	);
 }
 
@@ -113,13 +105,13 @@ function renderUnion(prop) {
 		return <span>{getType(prop).value}</span>;
 	}
 	let values = getType(prop).value.map((value, index) => (
-		<li className={s.listItem} key={value.name + index}>
-			<Code className={s.type}>{renderType(value)}</Code>
+		<li className="rsg-prop-listItem" key={value.name + index}>
+			<Code className="rsg-type">{renderType(value)}</Code>
 		</li>
 	));
 
 	return (
-		<span>One of type: <ul className={s.list}>{values}</ul></span>
+		<span>One of type: <ul className="rsg-prop-list">{values}</ul></span>
 	);
 }
 
@@ -131,8 +123,8 @@ function renderShape(props) {
 		let description = prop.description;
 		rows.push(
 			<div key={name}>
-				<Code className={s.name}>{name}</Code>{': '}
-				<Code className={s.type}>{renderType(prop)}</Code>
+				<Code className="rsg-name">{name}</Code>{': '}
+				<Code className="rsg-type">{renderType(prop)}</Code>
 				{defaultValue && ' — '}{defaultValue}
 				{description && ' — '}
 				{description && <Markdown text={description} inline />}
@@ -144,16 +136,16 @@ function renderShape(props) {
 
 export default function PropsRenderer({ props }) {
 	return (
-		<table className={s.table}>
-			<thead className={s.tableHead}>
+		<table className="rsg-prop-table">
+			<thead className="rsg-prop-thead">
 				<tr>
-					<th className={s.cellHeading}>Name</th>
-					<th className={s.cellHeading}>Type</th>
-					<th className={s.cellHeading}>Default</th>
-					<th className={s.cellHeading + ' ' + s.cellDesc}>Description</th>
+					<th className="rsg-prop-cellHeading">Name</th>
+					<th className="rsg-prop-cellHeading">Type</th>
+					<th className="rsg-prop-cellHeading">Default</th>
+					<th className="rsg-prop-cellHeading rsg-prop-cellDesc">Description</th>
 				</tr>
 			</thead>
-			<tbody className={s.tableBody}>
+			<tbody className="rsg-prop-tbody">
 				{renderRows(props)}
 			</tbody>
 		</table>

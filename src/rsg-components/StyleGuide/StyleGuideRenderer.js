@@ -2,34 +2,30 @@ import React, { PropTypes } from 'react';
 import Markdown from '../Markdown';
 import cx from 'classnames';
 
-const s = {
-	root: 'root',
-	hasSidebar: 'has-sidebar',
-	content: 'content',
-	components: 'components',
-	footer: 'footer',
-	sidebar: 'sidebar',
-	heading: 'heading'
-}
+const StyleGuideRenderer = ({ title, homepageUrl, components, toc, sidebar }) => {
+	const sidebarCss = sidebar
+		? 'hasSidebar'
+		: '';
 
-const StyleGuideRenderer = ({ title, homepageUrl, components, toc, sidebar }) => (
-	<div className={cx(s.root, sidebar && s.hasSidebar)}>
-		<main className={s.content}>
-			<div className={s.components}>
-				{components}
-				<footer className={s.footer}>
-					<Markdown text={`Generated with [React Styleguidist](${homepageUrl})`} />
-				</footer>
-			</div>
-		</main>
-		{sidebar &&
-			<div className={s.sidebar}>
-				<h1 className={s.heading}>{title}</h1>
-				{toc}
-			</div>
-		}
-	</div>
-);
+	return (
+		<div className={"rsg-main " + sidebarCss}>
+			<main className="rsg-content">
+				<div className="rsg-components">
+					{components}
+					<footer className="rsg-footer rsg-font rsg-light">
+						<Markdown text={`Generated with [React Styleguidist](${homepageUrl})`} />
+					</footer>
+				</div>
+			</main>
+			{sidebar &&
+				<div className="rsg-sidebar rsg-code-bg rsg-border">
+					<h1 className="rsg-sidebar-heading rsg-reset rsg-font rsg-border">{title}</h1>
+					{toc}
+				</div>
+			}
+		</div>
+	);
+};
 
 StyleGuideRenderer.propTypes = {
 	title: PropTypes.string.isRequired,
