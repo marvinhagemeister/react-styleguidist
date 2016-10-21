@@ -8,7 +8,7 @@ import {
 	processComponents,
 	processSections,
 } from './utils/utils';
-import StyleGuide from 'rsg-components/StyleGuide';
+import StyleGuide from './rsg-components/StyleGuide';
 
 // Make libraries available in examples
 global.React = React;
