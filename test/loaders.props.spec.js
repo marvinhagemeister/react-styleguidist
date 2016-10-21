@@ -4,7 +4,7 @@ import propsLoader from '../loaders/props.loader';
 
 describe('loaders-props', () => {
 	it('should return valid, parsable JS', () => {
-		const file = 'components/Button/Button.js';
+		const file = 'components/Button.js';
 		const result = propsLoader.call({
 			request: file,
 			options: {
@@ -16,7 +16,7 @@ describe('loaders-props', () => {
 	});
 
 	it('should extract doclets', () => {
-		const file = 'components/Placeholder/Placeholder.js';
+		const file = 'components/Placeholder.js';
 		const result = propsLoader.call({
 			request: file,
 			options: {

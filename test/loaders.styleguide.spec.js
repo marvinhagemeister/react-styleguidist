@@ -4,7 +4,7 @@ import styleguideLoader from '../loaders/styleguide.loader';
 
 describe('loaders-styleguide', () => {
 	it('should return valid, parsable JS', () => {
-		const file = 'components/Button/Button.js';
+		const file = 'components/Button.js';
 		const result = styleguideLoader.pitch.call({
 			request: file,
 			options: {
@@ -21,7 +21,7 @@ describe('loaders-styleguide', () => {
 	});
 
 	it('should return correct component paths: glob', () => {
-		const file = 'components/Button/Button.js';
+		const file = 'components/Button.js';
 		const result = styleguideLoader.pitch.call({
 			request: file,
 			options: {
@@ -40,14 +40,14 @@ describe('loaders-styleguide', () => {
 	});
 
 	it('should return correct component paths: function returning absolute paths', () => {
-		const file = 'components/Button/Button.js';
+		const file = 'components/Button.js';
 		const result = styleguideLoader.pitch.call({
 			request: file,
 			options: {
 				styleguidist: {
 					components: () => ([
-						`${__dirname}/components/Button/Button.js`,
-						`${__dirname}/components/Placeholder/Placeholder.js`,
+						`${__dirname}/components/Button.js`,
+						`${__dirname}/components/Placeholder.js`,
 					]),
 					configDir: __dirname,
 					getExampleFilename: () => 'Readme.md',
@@ -57,19 +57,19 @@ describe('loaders-styleguide', () => {
 		}, readFileSync(file, 'utf8'));
 		t.isOk(result);
 		t.notThrows(() => new Function(result), SyntaxError);  // eslint-disable-line no-new-func
-		t.equalTrue(result.includes(`'filepath': "${__dirname}/components/Button/Button.js"`));
-		t.equalTrue(result.includes(`'filepath': "${__dirname}/components/Placeholder/Placeholder.js"`));
+		t.equalTrue(result.includes(`'filepath': "${__dirname}/components/Button.js"`));
+		t.equalTrue(result.includes(`'filepath': "${__dirname}/components/Placeholder.js"`));
 	});
 
 	it('should return correct component paths: function returning relative paths', () => {
-		const file = 'components/Button/Button.js';
+		const file = 'components/Button.js';
 		const result = styleguideLoader.pitch.call({
 			request: file,
 			options: {
 				styleguidist: {
 					components: () => ([
-						'components/Button/Button.js',
-						'components/Placeholder/Placeholder.js',
+						'components/Button.js',
+						'components/Placeholder.js',
 					]),
 					configDir: __dirname,
 					getExampleFilename: () => 'Readme.md',
@@ -79,7 +79,7 @@ describe('loaders-styleguide', () => {
 		}, readFileSync(file, 'utf8'));
 		t.isOk(result);
 		t.notThrows(() => new Function(result), SyntaxError);  // eslint-disable-line no-new-func
-		t.equalTrue(result.includes(`'filepath': "${__dirname}/components/Button/Button.js"`));
-		t.equalTrue(result.includes(`'filepath': "${__dirname}/components/Placeholder/Placeholder.js"`));
+		t.equalTrue(result.includes(`'filepath': "${__dirname}/components/Button.js"`));
+		t.equalTrue(result.includes(`'filepath': "${__dirname}/components/Placeholder.js"`));
 	});
 });

@@ -97,7 +97,7 @@ describe('utils', () => {
 				},
 			},
 		]);
-		t.equal(Object.keys(global).length, sourceGlobalLength + 3);
+		t.equal(Object.keys(global).length, sourceGlobalLength + 2);
 		t.equal(global.Foo, 13);
 		t.equal(global.Bar, 27);
 		t.equal(global.PathedFoo, 32);
