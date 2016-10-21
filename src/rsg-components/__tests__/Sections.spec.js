@@ -2,10 +2,11 @@ import { shallow } from 'enzyme';
 import unexpected from 'unexpected';
 import unexpectedReact from 'unexpected-react';
 import React from 'react';
-import noop from 'lodash/noop';
 import Section from '../Section';
 import Sections from '../Sections';
 import SectionsRenderer from '../SectionsRenderer';
+
+const noop = () => {};
 
 const expect = unexpected.use(unexpectedReact);
 

@@ -1,6 +1,4 @@
 import flatMap from 'lodash/flatMap';
-import isArray from 'lodash/isArray';
-import extend from 'lodash/extend';
 
 export function setComponentsNames(components) {
 	components.map((component) => {
@@ -35,8 +33,8 @@ export function promoteInlineExamples(components) {
 export function flattenChildren(components) {
 	// If any of the components have multiple children, flatten them.
 	return flatMap(components, component => {
-		if (isArray(component.props)) {
-			return component.props.map(props => extend({}, component, { props }));
+		if (Array.isArray(component.props)) {
+			return component.props.map(props => Object.assign({}, component, { props }));
 		}
 		return component;
 	});
@@ -69,7 +67,7 @@ export function getFilterRegExp(query) {
 		.replace(/[^a-z0-9]/gi, '')
 		.split('')
 		.join('.*')
-	;
+		;
 	return new RegExp(query, 'gi');
 }
 
@@ -126,5 +124,5 @@ export function getComponentNameFromHash(hash = window.location.hash) {
 	return hash.substr(0, 3) === '#!/'
 		? hash.substr(3)
 		: null
-	;
+		;
 }

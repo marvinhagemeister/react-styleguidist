@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 import ReactDOM from 'react-dom';
 import {
 	getComponentNameFromHash,
@@ -12,7 +11,6 @@ import StyleGuide from './rsg-components/StyleGuide';
 
 // Make libraries available in examples
 global.React = React;
-global._ = _;
 
 let codeKey = 0;
 

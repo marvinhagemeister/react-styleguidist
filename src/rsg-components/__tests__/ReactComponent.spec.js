@@ -2,12 +2,13 @@ import { shallow } from 'enzyme';
 import unexpected from 'unexpected';
 import unexpectedReact from 'unexpected-react';
 import React from 'react';
-import noop from 'lodash/noop';
 import Examples from '../Examples';
 import Markdown from '../Markdown';
 import Playground from '../Playground';
 import ReactComponent from '../ReactComponent';
 import ReactComponentRenderer from '../ReactComponentRenderer';
+
+const noop = () => {};
 
 const expect = unexpected.use(unexpectedReact);
 

@@ -2,7 +2,6 @@ import { shallow } from 'enzyme';
 import unexpected from 'unexpected';
 import unexpectedReact from 'unexpected-react';
 import React from 'react';
-import noop from 'lodash/noop';
 import Markdown from '../Markdown';
 import Playground from '../Playground';
 import Examples from '../Examples';
@@ -13,7 +12,7 @@ const examples = [
 	{
 		type: 'code',
 		content: '<button>OK</button>',
-		evalInContext: noop,
+		evalInContext: () => { },
 	},
 	{
 		type: 'markdown',

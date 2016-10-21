@@ -2,8 +2,9 @@ import { shallow } from 'enzyme';
 import unexpected from 'unexpected';
 import unexpectedReact from 'unexpected-react';
 import React from 'react';
-import noop from 'lodash/noop';
 import Preview from '../Preview';
+
+const noop = () => {};
 
 const code = '<button>OK</button>';
 

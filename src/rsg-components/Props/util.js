@@ -1,5 +1,3 @@
-import trim from 'lodash/trim';
-
 /**
  * Remove quotes around given string.
  *
@@ -7,7 +5,7 @@ import trim from 'lodash/trim';
  * @returns {string}
  */
 export function unquote(string) {
-	return trim(string, '"\'');
+	return string.replace(/^["'](.*)["']$/, '$1');
 }
 
 /**

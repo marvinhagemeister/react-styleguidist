@@ -1,5 +1,5 @@
 import { assert as t } from 'chai';
-const _ = require('lodash');
+const map = require('lodash/map');
 import * as utils from '../src/utils/utils';
 
 const COMPONENTS = [
@@ -74,7 +74,7 @@ describe('utils', () => {
 				},
 			},
 		]);
-		t.deepEqual(_.map(result, 'name'), ['Foo', 'Bar', 'FooOverride']);
+		t.deepEqual(map(result, 'name'), ['Foo', 'Bar', 'FooOverride']);
 	});
 
 	// globalizeComponents
